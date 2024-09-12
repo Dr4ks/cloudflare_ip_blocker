@@ -78,6 +78,8 @@ def show_success_page():
     tk.Button(root, text="Block Single IP", command=handle_single_ip).pack(pady=10)
 
 
+    tk.Label(root,text="Author: Sahib Humbatzada",font=("Helvetica",10,"italic")).pack(side=tk.BOTTOM,pady=10)
+
 
 def select_file():
     """Open file dialog to select a .txt file and display the file path."""
@@ -167,6 +169,8 @@ def create_login_page():
     # Submit Button
     submit_button = tk.Button(root, text="Submit", command=validate_credentials)
     submit_button.pack(pady=10)
+
+    tk.Label(root, text="Author: Sahib Humbatzada", font=("Helvetica", 10, "italic")).pack(side=tk.BOTTOM, pady=10)
 
 
 # Initialize main window

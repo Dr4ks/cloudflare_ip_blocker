@@ -67,7 +67,6 @@ Authentication Page:
 
 ![alt text](img/image.png)
 
-
 Dashboard Page:
 
 ![alt text](img/image-1.png)
