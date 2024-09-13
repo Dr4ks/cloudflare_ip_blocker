@@ -45,7 +45,7 @@ pip install -r requirements.txt
 
 ## Usage
 
-You can use this software in two ways.
+You can use this software in two ways. Before implementing both ways, you need to change `account_id` and `list_id` with your own system's values on `cdf_endpoint` variable.
 
 1.
 

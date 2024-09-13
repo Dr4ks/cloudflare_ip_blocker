@@ -11,7 +11,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)  # Only for 
 ip_pattern = r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$"
 session=requests.Session()
 
-cdf_endpoint = "https://api.cloudflare.com/client/v4/accounts/{account_id}}/rules/lists/{list_id}/items" # Account ID and List ID
+cdf_endpoint = "https://api.cloudflare.com/client/v4/accounts/{account_id}/rules/lists/{list_id}/items" # Account ID and List ID
 
 user_email=None
 user_key=None
@@ -99,13 +99,14 @@ def handle_single_ip():
     if re.match(ip_pattern, single_ip):
         data = [
             {
-                "comment": f"Blocked By:{user_email}",
+                "comment": f"Blocked By: {user_email}",
                 "ip": single_ip
             }
         ]
         try:
-            session.post(cdf_endpoint, headers=cdf_request_headers, data=json.dumps(data))
-            messagebox.showinfo("Success", f"IP {single_ip} has been blocked.")
+            response=session.post(cdf_endpoint, headers=cdf_request_headers, data=json.dumps(data))
+            if response.status_code==200:
+                messagebox.showinfo("Success", f"IP {single_ip} has been blocked.")
         except requests.exceptions.RequestException as e:
             messagebox.showerror("Error", f"An error occurred during blocking: {e}")
     else:
@@ -134,17 +135,15 @@ def block_ips():
             if re.match(ip_pattern, ipaddr):
                 data = [
                     {
-                        "comment": f"Blocked By:{user_email}",
+                        "comment": f"Blocked By: {user_email}",
                         "ip": ipaddr
                     }
                 ]
-
                 session.post(cdf_endpoint, headers=cdf_request_headers, data=json.dumps(data))
-                messagebox.showinfo("Success", f"IP addresses from {filename} have been blocked.")
             else:
                 messagebox.showerror("Error", f"Invalid IP address: {ipaddr}")
                 continue
-
+        messagebox.showinfo("Success", f"IP addresses from {filename} have been blocked.")
     except FileNotFoundError:
         messagebox.showerror("Error", "File not found: " + filename)
     except requests.exceptions.RequestException as e:
